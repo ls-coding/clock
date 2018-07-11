@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>时钟</title>
+    <style>
+        #clock {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid #ff5386;
+            margin: 200px auto;
+            position: relative;
+            box-shadow: 0 0 10px #000000;
+        }
+        #point{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #7071ff;
+            position: absolute;
+            top: 94px;
+            left: 91px;
+        }
+    </style>
+</head>
+<body>
+<div id="clock">
+    <div id="point"></div>
+</div>
+<script>
+    let clock = document.querySelector("#clock");
+    for (let i = 0; i < 60; i++) {
+        let nd = document.createElement("div");
+        clock.appendChild(nd);
+        nd.style.cssText = `width:2px;height:${i % 5 ? 7 : 14}px;background:black;position:absolute;top:2px;left:99px;transform-origin: 1px 98px;transform: rotate(${6 * i}deg);`;
+    }
+
+    //时针
+    let hp = document.createElement("div");
+    hp.style.cssText = `width:50px;height:6px;background:black;position:absolute;left:100px;top:97px;transform-origin:left center;`;
+    clock.appendChild(hp);
+
+    //分针
+    let mp = document.createElement("div");
+    mp.style.cssText = `width:60px;height:4px;background:black;position:absolute;left:100px;top:98px;transform-origin:left center;`;
+    clock.appendChild(mp);
+
+    //秒针
+    let sp = document.createElement("div");
+    sp.style.cssText = `width:90px;height:2px;background:red;position:absolute;left:90px;top:99px;transform-origin:10px center;`;
+    clock.appendChild(sp);
+
+    function time() {
+        let date = new Date();
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+        hp.style.transform = `rotate(${hours * 30 - 90 + minutes * 0.5}deg)`;
+        mp.style.transform = `rotate(${minutes * 6 - 90}deg)`;
+        sp.style.transform = `rotate(${seconds * 6 - 90}deg)`;
+    }
+
+    time();
+
+    setInterval(time, 1000);
+</script>
+</body>
+</html>
